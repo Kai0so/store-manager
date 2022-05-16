@@ -12,7 +12,14 @@ const getAll = async () => {
     return products;
  };
 
+ const create = async (name, quantity) => {
+    const newProduct = await Product.create(name, quantity);
+
+    return newProduct;
+ };
+
 module.exports = {
     getAll,
     getById,
+    create,
 };
