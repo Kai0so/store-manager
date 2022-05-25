@@ -37,7 +37,25 @@ const createProductValidation = async (req, res, next) => {
     next();
 };
 
+const updateProductValidation = async (req, res, next) => {
+    const { id } = req.params;
+    const { name, quantity } = req.body;
+
+    const result = await Product.getById(id);
+    if (!result) return res.status(httpStatus('notFound')).json(errorMessage('notFoundProduct'));
+
+    const { error } = PRODUCT.validate({ name, quantity });
+    if (error) {
+        const errorType = error.details[0].type;
+        
+        return res.status(httpStatusCheck(errorType)).json({ message: error.message });
+    }
+
+    next();
+};
+
 module.exports = {
     getProductValidation,
     createProductValidation,
+    updateProductValidation,
 };
