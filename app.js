@@ -2,7 +2,8 @@ const express = require('express');
 const Product = require('./controllers/productController');
 const Sale = require('./controllers/saleController');
 const { getProductValidation,
-  createProductValidation } = require('./middlewares/productsValidation');
+  createProductValidation,
+  updateProductValidation } = require('./middlewares/productsValidation');
 const { getSaleValidation,
   createSaleValidation } = require('./middlewares/salesValidation');
 
@@ -18,6 +19,9 @@ app.get('/sales/:id', getSaleValidation, Sale.getById);
 // POST ENDPOINTS
 app.post('/products', createProductValidation, Product.create);
 app.post('/sales', createSaleValidation, Sale.create);
+
+// PUT ENDPOINTS
+app.put('/products/:id', updateProductValidation, Product.update);
 
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {
