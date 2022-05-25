@@ -35,7 +35,7 @@ const update = async (id, name, quantity) => {
   await connection.execute(query, [name, quantity, id]);
 
   return { id, name, quantity };
-}
+};
 
 module.exports = {
   getAll,
