@@ -30,10 +30,17 @@ const createProductValidation = async (req, res, next) => {
 
     if (error) {
         const errorType = error.details[0].type;
-        
+
         return res.status(httpStatusCheck(errorType)).json({ message: error.message });
     }
 
+    const checkProduct = await Product.getAll();
+
+    checkProduct.forEach((p) => {
+        if(name === p.name) {
+        next(res.status(httpStatus('conflict')).json(errorMessage('createProductConflict')));
+        }
+    });
     next();
 };
 
