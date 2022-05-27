@@ -43,8 +43,6 @@ const create = async (sales) => {
   return { id: insertId, itemsSold: sales };
 };
 
-
-
 const update = async (id, sales) => {
   const query = `UPDATE StoreManager.sales_products
   SET product_id = ?, quantity = ?
@@ -53,12 +51,12 @@ const update = async (id, sales) => {
   sales.forEach(async (s) => {
     const { productId, quantity } = s;
 
-    await connection.execute(query, [ productId,  quantity, id]);
+    await connection.execute(query, [productId, quantity, id]);
   });
 
   return {
     saleId: id,
-    itemUpdated: sales
+    itemUpdated: sales,
   };
 };
 

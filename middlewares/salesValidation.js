@@ -49,8 +49,8 @@ const updateSaleValidation = async (req, res, next) => {
         return res.status(httpStatus('notFound')).json(errorMessage('notFoundSale'));
     }
 
-    sales.forEach((s) => {
-        const { productId, quantity } = s;
+    sales.forEach((sale) => {
+        const { productId, quantity } = sale;
         const { error } = SALE.validate({ productId, quantity });
         if (error) {
             const errType = error.details[0].type;
