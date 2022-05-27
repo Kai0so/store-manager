@@ -2,11 +2,9 @@ const express = require('express');
 const Product = require('./controllers/productController');
 const Sale = require('./controllers/saleController');
 const { getProductValidation,
-  createProductValidation,
-  updateProductValidation } = require('./middlewares/productsValidation');
+  createProductValidation } = require('./middlewares/productsValidation');
 const { getSaleValidation,
-  createSaleValidation,
-  updateSaleValidation } = require('./middlewares/salesValidation');
+  createSaleValidation } = require('./middlewares/salesValidation');
 
 const app = express();
 app.use(express.json());
@@ -22,8 +20,8 @@ app.post('/products', createProductValidation, Product.create);
 app.post('/sales', createSaleValidation, Sale.create);
 
 // PUT ENDPOINTS
-app.put('/products/:id', updateProductValidation, Product.update);
-app.put('/sales/:id', updateSaleValidation, Sale.update);
+app.put('/products/:id', createProductValidation, getProductValidation, Product.update);
+app.put('/sales/:id', createSaleValidation, getSaleValidation, Sale.update);
 
 // DELETE ENDPOINTS
 app.delete('/products/:id', getProductValidation, Product.deleteProduct);
