@@ -22,9 +22,9 @@ const create = async (name, quantity) => {
   const query = `INSERT INTO StoreManager.products (name, quantity)
   VALUES
   (?, ?);`;
-  const [newProduct] = await connection.execute(query, [name, quantity]);
+  const [{ insertId }] = await connection.execute(query, [name, quantity]);
   
-  return newProduct;
+  return { id: insertId, name, quantity};
 };
 
 const update = async (id, name, quantity) => {

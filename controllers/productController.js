@@ -17,7 +17,7 @@ const create = async (req, res) => {
   const { name, quantity } = req.body;
   const newProduct = await Product.create(name, quantity);
 
-  res.status(httpStatus('ok')).json(newProduct);
+  res.status(httpStatus('created')).json(newProduct);
 };
 
 const update = async (req, res) => {
