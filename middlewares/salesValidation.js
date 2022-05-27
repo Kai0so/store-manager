@@ -40,7 +40,30 @@ const createSaleValidation = async (req, res, next) => {
     next();
 };
 
+const updateSaleValidation = async (req, res, next) => {
+    const { id } = req.params;
+    const sales = req.body;
+
+    const result = await Sale.getById(id);
+    if (result === null) {
+        return res.status(httpStatus('notFound')).json(errorMessage('notFoundSale'));
+    }
+
+    sales.forEach((s) => {
+        const { productId, quantity } = s;
+        const { error } = SALE.validate({ productId, quantity });
+        if (error) {
+            const errType = error.details[0].type;
+            const errMessage = error.details[0].message;
+            next(res.status(httpStatusCheck(errType)).json({ message: errMessage }));
+        }
+    });
+
+    next();
+};
+
 module.exports = {
     getSaleValidation,
     createSaleValidation,
+    updateSaleValidation,
 };
