@@ -17,7 +17,7 @@ const getById = async (req, res) => {
     const sales = req.body;
     const newSale = await Sale.create(sales);
 
-    res.status(httpStatus('ok')).json(newSale);
+    res.status(httpStatus('created')).json(newSale);
   };
 
   const update = async (req, res) => {
