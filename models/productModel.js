@@ -24,7 +24,7 @@ const create = async (name, quantity) => {
   (?, ?);`;
   const [{ insertId }] = await connection.execute(query, [name, quantity]);
   
-  return { id: insertId, name, quantity};
+  return { id: insertId, name, quantity };
 };
 
 const update = async (id, name, quantity) => {
