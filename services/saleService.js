@@ -20,8 +20,15 @@ const getById = async (id) => {
   return newSale;
 };
 
+const update = async (id, sales) => {
+  const updatedSale = await Sale.update(id, sales);
+
+  return updatedSale;
+};
+
 module.exports = {
     getAll,
     getById,
     create,
+    update,
 };
