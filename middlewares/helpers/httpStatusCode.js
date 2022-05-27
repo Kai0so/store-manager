@@ -2,6 +2,7 @@
 function httpStatus(type) {
     const Code = {
         ok: 200,
+        noContent: 204,
         notFound: 404,
         badRequest: 400,
         unprocessableEntity: 422,

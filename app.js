@@ -25,6 +25,9 @@ app.post('/sales', createSaleValidation, Sale.create);
 app.put('/products/:id', updateProductValidation, Product.update);
 app.put('/sales/:id', updateSaleValidation, Sale.update);
 
+// DELETE ENDPOINTS
+app.delete('/products/:id', getProductValidation, Product.deleteProduct);
+
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {
   response.send();

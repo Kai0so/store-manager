@@ -24,9 +24,16 @@ const getAll = async () => {
    return updatedProduct;
  };
 
+ const deleteProduct = async (id) => {
+   const deletedProduct = await Product.deleteProduct(id);
+ 
+   return deletedProduct;
+ };
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
+    deleteProduct,
 };
