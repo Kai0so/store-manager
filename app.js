@@ -27,6 +27,7 @@ app.put('/sales/:id', updateSaleValidation, Sale.update);
 
 // DELETE ENDPOINTS
 app.delete('/products/:id', getProductValidation, Product.deleteProduct);
+app.delete('/sales/:id', getSaleValidation, Sale.deleteSale);
 
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {

@@ -26,9 +26,16 @@ const update = async (id, sales) => {
   return updatedSale;
 };
 
+const deleteSale = async (id) => {
+  const deletedSale = await Sale.deleteSale(id);
+
+  return deletedSale;
+};
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
+    deleteSale,
 };
