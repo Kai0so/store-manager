@@ -7,7 +7,6 @@ const getAll = async () => {
   JOIN StoreManager.sales_products
   ORDER BY sale_id, product_id ASC`;
   const [sales] = await connection.execute(query);
-  
   return serialize(sales);
 };
 
@@ -19,9 +18,7 @@ const getById = async (id) => {
   WHERE sp.sale_id = ?
   ORDER BY sale_id, product_id ASC;`;
   const [sales] = await connection.execute(query, [id]);
-
   if (sales.length === 0) return null;
-
   return serialize(sales);
 };
 
@@ -33,13 +30,10 @@ const create = async (sales) => {
     `INSERT INTO StoreManager.sales (date)
       VALUES (NOW())`,
   );
-
   sales.forEach(async (s) => {
     const { productId, quantity } = s;
-
     await connection.execute(query, [insertId, productId, quantity]);
   });
-  
   return { id: insertId, itemsSold: sales };
 };
 
@@ -47,13 +41,10 @@ const update = async (id, sales) => {
   const query = `UPDATE StoreManager.sales_products
   SET product_id = ?, quantity = ?
   WHERE sale_id = ?;`;
-
   sales.forEach(async (s) => {
     const { productId, quantity } = s;
-
     await connection.execute(query, [productId, quantity, id]);
   });
-
   return {
     saleId: id,
     itemUpdated: sales,
@@ -64,9 +55,7 @@ const deleteSale = async (id) => {
   const query = `DELETE
   FROM StoreManager.sales_products
   WHERE sale_id = ?;`;
-
   await connection.execute(query, [id]);
-
   return {};
 };
 
