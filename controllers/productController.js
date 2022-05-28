@@ -11,40 +11,56 @@ const getAll = async (_req, res, next) => {
   }
 };
 
-const getById = async (req, res) => {
+const getById = async (req, res, next) => {
+  try {
     const { id } = req.params;
     const products = await Product.getById(id);
     res.status(httpStatus('ok')).json(products);
-  };
-
-const create = async (req, res) => {
-  const { name, quantity } = req.body;
-  const newProduct = await Product.create(name, quantity);
-
-  res.status(httpStatus('created')).json(newProduct);
+  } catch (error) {
+    next(error);
+  }
 };
 
-const update = async (req, res) => {
-  const { id } = req.params;
-  const { name, quantity } = req.body;
-
-  const updatedProduct = await Product.update(id, name, quantity);
-
-  res.status(httpStatus('ok')).json(updatedProduct);
+const create = async (req, res, next) => {
+  try {
+    const { name, quantity } = req.body;
+    const newProduct = await Product.create(name, quantity);
+  
+    res.status(httpStatus('created')).json(newProduct);
+  } catch (error) {
+    next(error);
+  }
 };
 
-const deleteProduct = async (req, res) => {
-  const { id } = req.params;
+const update = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name, quantity } = req.body;
 
-  const deletedProduct = await Product.deleteProduct(id);
+    const updatedProduct = await Product.update(id, name, quantity);
 
-  res.status(httpStatus('noContent')).json(deletedProduct);
+    res.status(httpStatus('ok')).json(updatedProduct);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const deletedProduct = await Product.deleteProduct(id);
+
+    res.status(httpStatus('noContent')).json(deletedProduct);
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = {
-    getAll,
-    getById,
-    create,
-    update,
-    deleteProduct,
+  getAll,
+  getById,
+  create,
+  update,
+  deleteProduct,
 };
