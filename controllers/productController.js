@@ -1,14 +1,10 @@
 const Product = require('../services/productService');
 const { httpStatus } = require('../middlewares/helpers/httpStatusCode');
 
-const getAll = async (_req, res, next) => {
-  try {
+const getAll = async (_req, res) => {
     const products = await Product.getAll();
 
     res.status(httpStatus('ok')).json(products);
-  } catch (error) {
-    next(error);
-  }
 };
 
 const getById = async (req, res) => {

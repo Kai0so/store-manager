@@ -3,8 +3,8 @@ const { serialize } = require('../middlewares/helpers/serializeData');
 
 const getAll = async () => {
   const query = `SELECT DISTINCT sale_id, date, product_id, quantity
-  FROM sales
-  JOIN sales_products
+  FROM StoreManager.sales
+  JOIN StoreManager.sales_products
   ORDER BY sale_id, product_id ASC`;
   const [sales] = await connection.execute(query);
   
