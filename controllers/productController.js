@@ -8,7 +8,7 @@ const getAll = async (_req, res, next) => {
     res.status(httpStatus('ok')).json(products);
   } catch (error) {
     next(error);
-  };
+  }
 };
 
 const getById = async (req, res) => {
