@@ -1,5 +1,6 @@
 const Product = require('../services/productService');
 const { httpStatus } = require('../middlewares/helpers/httpStatusCode');
+const { errorMessage } = require('../middlewares/helpers/errorMessages');
 
 const getAll = async (_req, res) => {
   const products = await Product.getAll();
@@ -9,6 +10,7 @@ const getAll = async (_req, res) => {
 const getById = async (req, res) => {
   const { id } = req.params;
   const products = await Product.getById(id);
+  if (!products) return res.status(httpStatus('notFound')).json(errorMessage('notFoundProduct'));
   res.status(httpStatus('ok')).json(products);
 };
 
@@ -27,8 +29,9 @@ const update = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
-  const deletedProduct = await Product.deleteProduct(id);
-  res.status(httpStatus('noContent')).json(deletedProduct);
+  const deleted = await Product.deleteProduct(id);
+  if (!deleted) return res.status(httpStatus('notFound')).json(errorMessage('notFoundProduct'));
+  res.status(httpStatus('noContent')).json(deleted);
 };
 
 module.exports = {

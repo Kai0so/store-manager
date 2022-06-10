@@ -21,6 +21,8 @@ const update = async (id, name, quantity) => {
 };
 
 const deleteProduct = async (id) => {
+  const products = await Product.getById(id);
+  if (!products) return false;
   const deletedProduct = await Product.deleteProduct(id);
   return deletedProduct;
 };
