@@ -1,4 +1,5 @@
 const Sale = require('../services/saleService');
+const Product = require('../services/productService');
 const { httpStatus } = require('../middlewares/helpers/httpStatusCode');
 const { errorMessage } = require('../middlewares/helpers/errorMessages');
 
@@ -14,10 +15,21 @@ const getById = async (req, res) => {
   res.status(httpStatus('ok')).json(sales);
 };
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
   const sales = req.body;
-  const newSale = await Sale.create(sales);
-  res.status(httpStatus('created')).json(newSale);
+  sales.forEach(async (s) => {
+    const { productId, quantity } = s;
+    const result = await Product.getById(productId);
+    if (result.quantity < quantity) {
+      next(res.status(httpStatus('unprocessableEntity')).json(errorMessage('notAllowed')));
+    }
+  });
+  try {
+    const newSale = await Sale.create(sales);
+    if (newSale) return res.status(httpStatus('created')).json(newSale);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const update = async (req, res) => {
